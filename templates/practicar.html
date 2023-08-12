@@ -2,29 +2,64 @@
 
 {% block content %}
 
-<div class="card m-4">
+<div class="card m-4 ">
     <div class="card-header">
-        <h5 class="card-title fs-1">{{ data.nombre }}</h5>
+        <h5 class="card-title fs-1 text-center">Practica la postura {{ data.nombre }}</h5>
     </div>
-    <div class="row g-0">
-        <div class="col-md-6">
+    <div class="row g-0 d-flex align-items-center">
+        <div class="col-md-5">
             <div class="card-body">
                 <img src="{{ url_for('static', filename='images/'+data.nombre+'.jpeg') }}"
                     class="img-fluid rounded-start" alt="{{ data.nombre }}">
             </div>
         </div>
-        <div class="col-md-6">
-            <video id="camera-stream" class="w-100 h-auto" autoplay></video>
-            <script>
-                async function startCamera() {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    const videoElement = document.getElementById("camera-stream");
-                    videoElement.srcObject = stream;
-                }
-                startCamera();
-            </script>
+        <div class="col-md-2">
+            <div class="card-body">
+                <h1 id="prediction" class="text-center fs-1" style="font-size: 50px;"></h1>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <video id="video" class="w-100 h-100" autoplay></video>
+            <canvas id="canvas" style="display:none;"></canvas>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+          const video = document.getElementById('video');
+          const canvas = document.getElementById('canvas');
+          const context = canvas.getContext('2d');
+          const predictionDiv = document.getElementById('prediction');
+    
+          // Acceder a la cámara
+          navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+              video.srcObject = stream;
+              video.play();
+            })
+            .catch(function (error) {
+              console.error('Error al acceder a la cámara:', error);
+            });
+    
+          // Capturar y enviar el frame cada 5 segundos
+          setInterval(function () {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageDataURL = canvas.toDataURL('image/jpeg');
+    
+            $.ajax({
+              type: 'POST',
+              url: '/predict',
+              data: { image_data: imageDataURL, postura: '{{ data.nombre }}' },
+              success: function (response) {
+                predictionDiv.innerHTML = response.prediction+"%";
+              },
+              error: function (error) {
+                console.error('Error en la solicitud AJAX:', error);
+              }
+            });
+          }, 2000);
+        });
+    
+      </script>
 </div>
 
 <!-- <div class="card m-4">
