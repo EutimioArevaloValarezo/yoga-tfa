@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="card m-4">
+    <div class="card-header">
+        <h5 class="card-title fs-1">{{ data.nombre }}</h5>
+    </div>
+    <div class="row g-0">
+        <div class="col-md-6">
+            <div class="card-body">
+                <img src="{{ url_for('static', filename='images/'+data.nombre+'.jpeg') }}"
+                    class="img-fluid rounded-start" alt="{{ data.nombre }}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <video id="camera-stream" class="w-100 h-auto" autoplay></video>
+            <script>
+                async function startCamera() {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    const videoElement = document.getElementById("camera-stream");
+                    videoElement.srcObject = stream;
+                }
+                startCamera();
+            </script>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="card m-4">
+    <div class="card-header">
+        <h5 class="card-title fs-1">{{ data.nombre }}</h5>
+    </div>
+    <div class="row g-0">
+        <div class="col-md-6">
+            <div class="ratio ratio-16x9"> 
+                <img src="{{ url_for('static', filename='images/'+data.nombre+'.jpeg') }}" class=" img-fluid rounded-start" alt="{{ data.nombre }}"> 
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ratio ratio-16x9"> <video id="camera-stream" class="w-100 h-auto" autoplay></video>
+                <script>
+
+                    async function startCamera() {
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                        const videoElement = document.getElementById("camera - stream");
+                        videoElement.srcObject = stream;
+                    }
+                    startCamera();
+
+                </script>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+{% endblock %}

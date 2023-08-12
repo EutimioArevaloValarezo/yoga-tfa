@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card m-4">
+    <div class="row g-0">
+        <div class="col-md-3">
+            <img src="{{ url_for('static', filename='images/'+data.nombre+'.jpeg') }}" class="img-fluid rounded-start"
+                alt="{{ data.nombre }}">
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <h5 class="card-title fs-1">{{ data.nombre }}</h5>
+                <p class="card-text fs-3" style="text-align: justify;">{{ data.informacion }}</p>
+                <div class="d-grid gap-2">
+                    <a class="btn btn-outline-success" href="{{ url_for('practicar_'+postura) }}">PRACTICAR</a>
+                </div>
+            </div>
+        </div>
+        <form id="formPreguntar">
+            <div class="row g-0">
+                <label for="exampleFormControlInput1" class="form-label m-2">Pregunta sobre {{ data.nombre }}:</label>
+                <div class="col-md-9">
+                    <input type="hidden" id="postura" name="postura" value="{{ data.nombre }}">
+                    <input type="text" class="form-control " id="pregunta" name="pregunta"
+                        placeholder="Ingresa tu pregunta...">
+                </div>
+                <div class="col-md-3">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-dark" type="submit">Preguntar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label m-2">Respuesta:</label>
+            <textarea class="form-control" id="respuesta" rows="3" readonly=""></textarea>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#formPreguntar').submit(function (event) {
+                    event.preventDefault();
+                    var pregunta = $('#pregunta').val();
+                    var postura = $('#postura').val();
+                    $.post('/preguntar', { pregunta: pregunta, postura: postura }, function (data) {
+                        $('#respuesta').text(data.respuesta);
+                    });
+                });
+            });
+        </script>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card m-4">
+    <img src="{{ url_for('static', filename='images/yoga.jpg') }}"
+        class="card-img-top img-fluid w-100 rounded mx-auto d-block" alt="yoga">
+    <div class="card-body">
+        <h5 class="card-title">Yoga</h5>
+        <p class="card-text" style="text-align: justify;">El yoga es una práctica milenaria originada en la India que ha
+            sido utilizada durante siglos para mejorar la salud física y mental. Con su énfasis en las prácticas de
+            respiración y meditación, el yoga puede ayudar a reducir la ansiedad y mejorar el estado de ánimo. Además,
+            el yoga puede mejorar las habilidades cognitivas, como el aprendizaje y la memoria, al fortalecer partes del
+            cerebro que juegan un papel clave en estas funciones. En resumen, el yoga es una práctica beneficiosa para
+            la salud mental que combina movimiento físico, respiración profunda, meditación y atención plena.</p>
+        <p class="card-text text-justify" style="text-align: justify;"><small class="text-body-secondary">En esta
+                página, exploraremos en detalle una serie de fascinantes posiciones de yoga que te ayudarán a mejorar tu
+                flexibilidad, equilibrio y bienestar general. Desde la estabilidad y expansión de TRIKONASANA hasta la
+                potencia y firmeza de UTKATA KONASANA, pasando por la fuerza y gracia de VIRABHADRASANA hasta la
+                conexión con la naturaleza y serenidad de VRIKSHASANA, cada una de estas posturas tiene su propia
+                singularidad y beneficios únicos.</small></p>
+    </div>
+</div>
+
+<div class="card-group mb-4 m-2">
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/TRIKONASANA.jpeg') }}"
+            class="card-img-top img-fluid h-50 w-75 rounded mx-auto d-block" alt="TRIKONASANA">
+        <div class="card-body">
+            <h5 class="card-title">Trikonasana</h5>
+            <p class="card-text" style="text-align: justify;">También conocida como la postura del triángulo, es una
+                postura básica de hatha yoga que se considera relativamente sencilla y es una de las primeras posturas
+                que aprenden los principiantes en esta disciplina.</p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/UTKATA KONASANA.jpeg') }}"
+            class="card-img-top img-fluid h-50 w-75 rounded mx-auto d-block" alt="UTKATA-KONASANA">
+        <div class="card-body">
+            <h5 class="card-title">Utkata Konasana</h5>
+            <p class="card-text" style="text-align: justify;">También conocida como la postura del ángel feroz o la
+                postura de la diosa, es una pose de yoga de pie que desafía tus músculos y tu mente.</p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/VIRABHADRASANA.jpeg') }}"
+            class="card-img-top img-fluid h-50 w-75 rounded mx-auto d-block" alt="VIRABHADRASANA">
+        <div class="card-body">
+            <h5 class="card-title">Virabhadrasana</h5>
+            <p class="card-text" style="text-align: justify;">También conocida como la postura del guerrero, es una
+                serie de asanas de pie en el yoga moderno y se considera una postura de nivel básico o para
+                principiantes.</p>
+        </div>
+    </div>
+    <div class="card">
+        <img src="{{ url_for('static', filename='images/VRIKSHASANA.jpeg') }}"
+            class="card-img-top img-fluid h-50 w-75 rounded mx-auto d-block" alt="VRIKSHASANA">
+        <div class="card-body">
+            <h5 class="card-title">Vrikshasana</h5>
+            <p class="card-text" style="text-align: justify;">También conocida como la postura del árbol, es una asana
+                que forma parte del grupo de posturas de equilibrio y es una de las posturas más conocidas en el mundo
+                del Yoga.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
