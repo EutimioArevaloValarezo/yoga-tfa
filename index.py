@@ -17,25 +17,27 @@ def encontrar_indice(lista, elemento):
             return i
     return -1 
 
-def predecir(imagen, postura):
+def predecir(image_data, postura):
 
     indice = encontrar_indice(posturas, postura)
+    print("Postura: ",postura," Indice:",indice)
+    image_bytes = base64.b64decode(image_data.split(',')[1])
+    image_array = np.frombuffer(image_bytes, dtype=np.uint8)
+    img = cv2.imdecode(image_array, flags=1)
 
-    target_size = (224, 224)
-    img = imagen
-    img = np.resize(img, target_size)
-    img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+    # Corregir el balance de blancos (convertir a escala de grises y luego de nuevo a RGB)
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img_corrected = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2BGR)
 
-    # Convertimos la imagen a un array numpy
-    x = np.array(img)
-    x = np.expand_dims(x, axis=0)
-
-    # Preprocesamos la imagen
-    img_data = preprocess_input(x)
+    # Preprocesar la imagen para que coincida con los requisitos de DenseNet121
+    img_resized = cv2.resize(img_corrected, (224, 224))
+    img_resized = img_resized / 255.0
+    img_processed = np.expand_dims(img_resized, axis=0)
 
     # Realizamos la predicción
-    classes = model.predict(img_data)
+    classes = model.predict(img_processed)
     presicion = round(classes[0][indice]*100, 2)
+
     return presicion
 
 with open(ruta_json_posiciones, 'r', encoding='utf-8') as file:
@@ -119,17 +121,12 @@ def practicar_Vrikshasana():
 def predict():
     image_data = request.form['image_data']
     postura = request.form['postura']
-    image_bytes = base64.b64decode(image_data.split(',')[1])
-    image_array = np.frombuffer(image_bytes, dtype=np.uint8)
-    image = cv2.imdecode(image_array, flags=1)
-    prediction = predecir(image, postura)
-
+    prediction = predecir(image_data, postura)
     return jsonify({'prediction': prediction})
 
 if __name__ == '__main__':
-    app.run(
-        debug=True,
-        extra_files=['./images/']
-    )
+    app.run(host='0.0.0.0', 
+            port=5000, 
+            debug=True)
 
 
