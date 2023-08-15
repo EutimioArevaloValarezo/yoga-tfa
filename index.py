@@ -1,3 +1,8 @@
+# pip install flask
+# pip install cv2
+# pip install tensorflow
+# pip install transformers
+
 from flask import *
 import base64
 import cv2
