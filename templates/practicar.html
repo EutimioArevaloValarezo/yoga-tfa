@@ -40,7 +40,7 @@
               console.error('Error al acceder a la cámara:', error);
             });
     
-          // Capturar y enviar el frame cada 5 segundos
+          // Capturar y enviar el frame cada 2 segundos
           setInterval(function () {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageDataURL = canvas.toDataURL('image/jpeg');
@@ -56,7 +56,7 @@
                 console.error('Error en la solicitud AJAX:', error);
               }
             });
-          }, 2000);
+          }, 1000);
         });
     
       </script>
